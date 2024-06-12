@@ -19,9 +19,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function applyStrain(points, biaxialStrain, uniaxialStrain, strainAngle) {
+        let strainAngleRad = Math.radians(strainAngle);
         let strainMatrix = [
-            [1 + biaxialStrain + uniaxialStrain * Math.cos(Math.radians(strainAngle)) ** 2, uniaxialStrain * Math.sin(Math.radians(strainAngle)) * Math.cos(Math.radians(strainAngle))],
-            [uniaxialStrain * Math.sin(Math.radians(strainAngle)) * Math.cos(Math.radians(strainAngle)), 1 + biaxialStrain + uniaxialStrain * Math.sin(Math.radians(strainAngle)) ** 2]
+            [1 + biaxialStrain + uniaxialStrain * Math.cos(strainAngleRad) ** 2, uniaxialStrain * Math.sin(strainAngleRad) * Math.cos(strainAngleRad)],
+            [uniaxialStrain * Math.sin(strainAngleRad) * Math.cos(strainAngleRad), 1 + biaxialStrain + uniaxialStrain * Math.sin(strainAngleRad) ** 2]
         ];
         return points.map(p => {
             return {
