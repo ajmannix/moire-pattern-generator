@@ -10,6 +10,7 @@
         .slider { width: 300px; }
         .value { margin-left: 10px; width: 50px; text-align: right; }
         .container { display: flex; flex-direction: column; align-items: center; }
+        .button { margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -18,29 +19,30 @@
         <div class="slider-container">
             <label for="biaxialStrain">Biaxial Strain: </label>
             <input type="range" min="-0.1" max="0.1" step="0.01" value="0" id="biaxialStrain" class="slider">
-            <input type="text" id="biaxialStrainValue" class="value" readonly>
+            <input type="number" id="biaxialStrainValue" class="value">
         </div>
         <div class="slider-container">
             <label for="uniaxialStrain">Uniaxial Strain: </label>
             <input type="range" min="-0.1" max="0.1" step="0.01" value="0" id="uniaxialStrain" class="slider">
-            <input type="text" id="uniaxialStrainValue" class="value" readonly>
+            <input type="number" id="uniaxialStrainValue" class="value">
         </div>
         <div class="slider-container">
             <label for="strainAngle">Strain Angle: </label>
             <input type="range" min="0" max="180" step="1" value="0" id="strainAngle" class="slider">
-            <input type="text" id="strainAngleValue" class="value" readonly>
+            <input type="number" id="strainAngleValue" class="value">
         </div>
         <div class="slider-container">
             <label for="twistAngle">Twist Angle: </label>
             <input type="range" min="-10" max="10" step="0.1" value="0" id="twistAngle" class="slider">
-            <input type="text" id="twistAngleValue" class="value" readonly>
+            <input type="number" id="twistAngleValue" class="value">
         </div>
         <div class="slider-container">
             <label for="rangeOfView">Range of View: </label>
             <input type="range" min="10" max="100" step="10" value="50" id="rangeOfView" class="slider">
-            <input type="text" id="rangeOfViewValue" class="value" readonly>
+            <input type="number" id="rangeOfViewValue" class="value">
         </div>
         <svg id="moirePattern" width="800" height="800"></svg>
+        <button id="saveButton" class="button">Save Image</button>
     </div>
     <script src="moire.js"></script>
 </body>
