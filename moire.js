@@ -61,14 +61,16 @@ document.addEventListener("DOMContentLoaded", function() {
         const slider = document.getElementById(sliderId);
         const input = document.getElementById(inputId);
 
+        // Update text box when slider value changes
         slider.addEventListener("input", () => {
             input.value = slider.value;
             drawPattern();
         });
 
+        // Update slider when text box value changes
         input.addEventListener("input", () => {
             const value = parseFloat(input.value);
-            if (!isNaN(value)) {
+            if (!isNaN(value) && value >= parseFloat(slider.min) && value <= parseFloat(slider.max)) {
                 slider.value = value;
                 drawPattern();
             }
@@ -102,5 +104,5 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById("saveButton").addEventListener("click", saveSvg);
 
-    drawPattern();
+    drawPattern(); // Initial draw
 });
