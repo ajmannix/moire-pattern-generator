@@ -17,34 +17,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return points;
     }
 
-    function applyStrain(points, biaxialStrain, uniaxialStrain, strainAngle) {
-        let strainAngleRad = Math.radians(strainAngle);
-        let strainMatrix = [
-            [1 + biaxialStrain + uniaxialStrain * Math.cos(strainAngleRad) ** 2, uniaxialStrain * Math.sin(strainAngleRad) * Math.cos(strainAngleRad)],
-            [uniaxialStrain * Math.sin(strainAngleRad) * Math.cos(strainAngleRad), 1 + biaxialStrain + uniaxialStrain * Math.sin(strainAngleRad) ** 2]
-        ];
-        return points.map(p => {
-            return {
-                x: p.x * strainMatrix[0][0] + p.y * strainMatrix[0][1],
-                y: p.x * strainMatrix[1][0] + p.y * strainMatrix[1][1]
-            };
-        });
-    }
-
-    function applyRotation(points, theta) {
-        let thetaRad = Math.radians(theta);
-        let rotationMatrix = [
-            [Math.cos(thetaRad), -Math.sin(thetaRad)],
-            [Math.sin(thetaRad), Math.cos(thetaRad)]
-        ];
-        return points.map(p => {
-            return {
-                x: p.x * rotationMatrix[0][0] + p.y * rotationMatrix[0][1],
-                y: p.x * rotationMatrix[1][0] + p.y * rotationMatrix[1][1]
-            };
-        });
-    }
-
     function drawPattern() {
         let biaxialStrain = parseFloat(document.getElementById("biaxialStrain").value);
         let uniaxialStrain = parseFloat(document.getElementById("uniaxialStrain").value);
@@ -60,8 +32,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let lattice1 = generateHexagonalLattice(rangeOfView, a1);
         let lattice2 = generateHexagonalLattice(rangeOfView, a2);
-        lattice2 = applyStrain(lattice2, biaxialStrain, uniaxialStrain, strainAngle);
-        lattice2 = applyRotation(lattice2, twistAngle);
 
         svg.selectAll("circle").remove(); // Clear previous circles
 
@@ -86,10 +56,6 @@ document.addEventListener("DOMContentLoaded", function() {
             .style("fill", "red")
             .style("opacity", 0.5);
     }
-
-    Math.radians = function(degrees) {
-        return degrees * Math.PI / 180;
-    };
 
     document.getElementById("biaxialStrain").addEventListener("input", drawPattern);
     document.getElementById("uniaxialStrain").addEventListener("input", drawPattern);
