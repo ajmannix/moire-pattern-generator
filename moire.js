@@ -57,11 +57,50 @@ document.addEventListener("DOMContentLoaded", function() {
             .style("opacity", 0.5);
     }
 
-    document.getElementById("biaxialStrain").addEventListener("input", drawPattern);
-    document.getElementById("uniaxialStrain").addEventListener("input", drawPattern);
-    document.getElementById("strainAngle").addEventListener("input", drawPattern);
-    document.getElementById("twistAngle").addEventListener("input", drawPattern);
-    document.getElementById("rangeOfView").addEventListener("input", drawPattern);
+    function syncSliderAndInput(sliderId, inputId) {
+        const slider = document.getElementById(sliderId);
+        const input = document.getElementById(inputId);
+
+        slider.addEventListener("input", () => {
+            input.value = slider.value;
+            drawPattern();
+        });
+
+        input.addEventListener("input", () => {
+            const value = parseFloat(input.value);
+            if (!isNaN(value)) {
+                slider.value = value;
+                drawPattern();
+            }
+        });
+    }
+
+    function saveSvg() {
+        const serializer = new XMLSerializer();
+        const source = serializer.serializeToString(svg.node());
+
+        const svgBlob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
+        const url = URL.createObjectURL(svgBlob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "moire_pattern.svg";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    Math.radians = function(degrees) {
+        return degrees * Math.PI / 180;
+    };
+
+    syncSliderAndInput("biaxialStrain", "biaxialStrainValue");
+    syncSliderAndInput("uniaxialStrain", "uniaxialStrainValue");
+    syncSliderAndInput("strainAngle", "strainAngleValue");
+    syncSliderAndInput("twistAngle", "twistAngleValue");
+    syncSliderAndInput("rangeOfView", "rangeOfViewValue");
+
+    document.getElementById("saveButton").addEventListener("click", saveSvg);
 
     drawPattern();
 });
