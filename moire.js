@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const height = +svg.attr("height");
     const a1 = 1.0;
     const a2 = 1.0;
-    let N = 50; // Reduced number of grid points per axis
 
     function generateHexagonalLattice(N, a) {
         let points = [];
