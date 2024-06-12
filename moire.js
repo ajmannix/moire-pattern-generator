@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function() {
     const svg = d3.select("#moirePattern");
     const width = +svg.attr("width");
