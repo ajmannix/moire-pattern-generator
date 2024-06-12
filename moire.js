@@ -51,9 +51,16 @@ document.addEventListener("DOMContentLoaded", function() {
         let uniaxialStrain = parseFloat(document.getElementById("uniaxialStrain").value);
         let strainAngle = parseFloat(document.getElementById("strainAngle").value);
         let twistAngle = parseFloat(document.getElementById("twistAngle").value);
+        let rangeOfView = parseFloat(document.getElementById("rangeOfView").value);
 
-        let lattice1 = generateHexagonalLattice(N, a1);
-        let lattice2 = generateHexagonalLattice(N, a2);
+        document.getElementById("biaxialStrainValue").value = biaxialStrain.toFixed(2);
+        document.getElementById("uniaxialStrainValue").value = uniaxialStrain.toFixed(2);
+        document.getElementById("strainAngleValue").value = strainAngle.toFixed(0);
+        document.getElementById("twistAngleValue").value = twistAngle.toFixed(1);
+        document.getElementById("rangeOfViewValue").value = rangeOfView.toFixed(0);
+
+        let lattice1 = generateHexagonalLattice(rangeOfView, a1);
+        let lattice2 = generateHexagonalLattice(rangeOfView, a2);
         lattice2 = applyStrain(lattice2, biaxialStrain, uniaxialStrain, strainAngle);
         lattice2 = applyRotation(lattice2, twistAngle);
 
@@ -89,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("uniaxialStrain").addEventListener("input", drawPattern);
     document.getElementById("strainAngle").addEventListener("input", drawPattern);
     document.getElementById("twistAngle").addEventListener("input", drawPattern);
+    document.getElementById("rangeOfView").addEventListener("input", drawPattern);
 
     drawPattern();
 });
