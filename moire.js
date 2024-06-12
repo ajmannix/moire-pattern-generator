@@ -24,11 +24,11 @@ document.addEventListener("DOMContentLoaded", function() {
         let twistAngle = parseFloat(document.getElementById("twistAngle").value);
         let rangeOfView = parseFloat(document.getElementById("rangeOfView").value);
 
-        document.getElementById("biaxialStrainValue").value = biaxialStrain.toFixed(2);
-        document.getElementById("uniaxialStrainValue").value = uniaxialStrain.toFixed(2);
-        document.getElementById("strainAngleValue").value = strainAngle.toFixed(0);
-        document.getElementById("twistAngleValue").value = twistAngle.toFixed(1);
-        document.getElementById("rangeOfViewValue").value = rangeOfView.toFixed(0);
+        document.getElementById("biaxialStrainValue").value = biaxialStrain;
+        document.getElementById("uniaxialStrainValue").value = uniaxialStrain;
+        document.getElementById("strainAngleValue").value = strainAngle;
+        document.getElementById("twistAngleValue").value = twistAngle;
+        document.getElementById("rangeOfViewValue").value = rangeOfView;
 
         let lattice1 = generateHexagonalLattice(rangeOfView, a1);
         let lattice2 = generateHexagonalLattice(rangeOfView, a2);
@@ -77,21 +77,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    function saveSvg() {
-        const serializer = new XMLSerializer();
-        const source = serializer.serializeToString(svg.node());
-
-        const svgBlob = new Blob([source], { type: "image/svg+xml;charset=utf-8" });
-        const url = URL.createObjectURL(svgBlob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "moire_pattern.svg";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-    }
-
     Math.radians = function(degrees) {
         return degrees * Math.PI / 180;
     };
@@ -101,8 +86,6 @@ document.addEventListener("DOMContentLoaded", function() {
     syncSliderAndInput("strainAngle", "strainAngleValue");
     syncSliderAndInput("twistAngle", "twistAngleValue");
     syncSliderAndInput("rangeOfView", "rangeOfViewValue");
-
-    document.getElementById("saveButton").addEventListener("click", saveSvg);
 
     drawPattern(); // Initial draw
 });
